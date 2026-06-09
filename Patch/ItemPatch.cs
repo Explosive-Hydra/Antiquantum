@@ -2,7 +2,7 @@
 using System.Linq;
 using HarmonyLib;
 
-namespace Quantum;
+namespace Quantum.Patch;
 
 [HarmonyPatch(typeof(Item))]
 public static class ItemPatch
@@ -38,11 +38,12 @@ public static class ItemPatch
 
         var result = "";
 
-        if (ModLocale.HasLocaleKey(LocaleKeyPre + id))
-        {
-            result += Locale(id);
-            result += "\n";
-        }
+        if (!ModLocale.HasLocaleKey(LocaleKeyPre + id))
+            return string.IsNullOrEmpty(result.Trim())
+                ? null
+                : result.TrimEnd('\n');
+        result += Locale(id);
+        result += "\n";
 
         return string.IsNullOrEmpty(result.Trim())
             ? null

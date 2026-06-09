@@ -21,6 +21,22 @@ public class EnLangGenerator : ModLangGenBase
         Add("key.ctrl_to_expand.up", "Hold Ctrl to expand more information");
         Add("key.ctrl_to_expand.down", "Release Ctrl to Fold More Info");
 
-        Add("config.ctrl_to_expand.description", "Press Ctrl to show more information");
+        // Config - Info
+        Add("config.info.ammunition_ui.name", "Ammunition UI");
+        Add("config.info.ammunition_ui.description", "Display your ammunition in real time!");
+        Add("config.info.ctrl_to_expand.name", "Ctrl for more information");
+        Add("config.info.ctrl_to_expand.description", "Press Ctrl to show more information");
+
+        // Config - Item - Gun
+        Add("config.item.gun.auto_rock.name", "Auto Rack");
+        Add("config.item.gun.auto_rock.description", "If true, guns will automatically rack and stay racked when ammo is available.");
+        Add("config.item.gun.indestructible_gun.name", "Indestructible Gun");
+        Add("config.item.gun.indestructible_gun.description", "If true, guns will not be destroyed.");
+        Add("config.item.gun.infinite_ammunition.name", "Infinite Ammunition");
+        Add("config.item.gun.infinite_ammunition.description", "∞ INFINITE AMMUNITION ∞");
+        Add("config.item.gun.never_jam.name", "Never Jam");
+        Add("config.item.gun.never_jam.description", "If true, guns will never jam.");
+        Add("config.item.gun.recoilless.name", "Recoilless");
+        Add("config.item.gun.recoilless.description", "If true, guns will not have recoil.");
     }
 }
