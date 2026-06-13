@@ -16,6 +16,8 @@ public class ConsoleScriptPatch
     private static string _lastPartial = "";
     private static float _lastUpTime;
     private static float _lastDownTime;
+    /// <summary>DoReplace 之前的输入文本（用于 Ctrl+Z 撤销）</summary>
+    private static string _previousText = "";
 
     private static int MaxVisible => Plugin.MaxVisibleCandidates.Value;
 
@@ -152,6 +154,15 @@ public class ConsoleScriptPatch
             ClampIndex();
         }
 
+        if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) &&
+            Input.GetKeyDown(KeyCode.Z) && !string.IsNullOrEmpty(_previousText))
+        {
+            __instance.input.text = _previousText;
+            __instance.SetCaretToEnd();
+            ClearState();
+            return;
+        }
+
         if (_candidates.Length == 0)
             return;
 
@@ -182,6 +193,7 @@ public class ConsoleScriptPatch
         _index = 0;
         _lastUpTime = 0f;
         _lastDownTime = 0f;
+        _previousText = "";
     }
 
     private static void ClampIndex()
@@ -194,6 +206,9 @@ public class ConsoleScriptPatch
 
     private static void DoReplace(ConsoleScript instance, string[] args)
     {
+        // 保存当前文本用于撤销
+        _previousText = instance.input.text;
+
         var prefix = string.Join(" ", args.Take(args.Length - 1));
         var replacement = _candidates[_index];
         instance.input.text = $"{prefix} {replacement}";
