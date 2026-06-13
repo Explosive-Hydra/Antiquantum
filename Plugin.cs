@@ -28,6 +28,7 @@ public class Plugin : BaseUnityPlugin
     public static ConfigEntry<bool> IndestructibleGun;
     public static ConfigEntry<bool> InfiniteAmmunition;
     public static ConfigEntry<bool> NeverJam;
+    public static ConfigEntry<bool> NoCasing;
     public static ConfigEntry<bool> Recoilless;
 
 
@@ -53,6 +54,7 @@ public class Plugin : BaseUnityPlugin
         IndestructibleGun = RegisterConfigItemGun(Config, nameof(IndestructibleGun).ToSnakeCase(), false);
         InfiniteAmmunition = RegisterConfigItemGun(Config, nameof(InfiniteAmmunition).ToSnakeCase(), false);
         NeverJam = RegisterConfigItemGun(Config, nameof(NeverJam).ToSnakeCase(), false);
+        NoCasing = RegisterConfigItemGun(Config, nameof(NoCasing).ToSnakeCase(), false);
         Recoilless = RegisterConfigItemGun(Config, nameof(Recoilless).ToSnakeCase(), false);
     }
 

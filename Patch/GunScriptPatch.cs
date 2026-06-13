@@ -1,15 +1,17 @@
-﻿using HarmonyLib;
+﻿using System.Diagnostics.CodeAnalysis;
+using HarmonyLib;
 
 namespace Quantum.Patch;
 
 [HarmonyPatch(typeof(GunScript))]
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public static class GunScriptPatch
 {
     internal static bool HasOne;
 
     [HarmonyPatch("Update")]
     [HarmonyPrefix]
-    private static void UpdatePrefix(GunScript __instance)
+    public static void UpdatePrefix(GunScript __instance)
     {
         HasOne = __instance.roundInChamber == GunScript.RoundInChamber.Round;
 
@@ -23,17 +25,28 @@ public static class GunScriptPatch
             __instance.racked = false;
         }
 
-        if (Plugin.InfiniteAmmunition.Value) __instance.roundsInMag = __instance.magCapacity;
-        __instance.knockBack = Plugin.Recoilless.Value 
-            ? 0 
+        if (Plugin.InfiniteAmmunition.Value) 
+            __instance.roundsInMag = __instance.magCapacity;
+        
+        __instance.knockBack = Plugin.Recoilless.Value
+            ? 0
             : 8;
         if (Plugin.IndestructibleGun.Value) __instance.conditionLossPerShot = 0;
         if (!Plugin.AmmunitionUi.Value) PlayerCameraPatch.DestroyAmmunitionUi();
     }
 
+    [HarmonyPatch("Fire")]
+    [HarmonyPostfix]
+    public static void FirePostfix(GunScript __instance)
+    {
+        if (Plugin.NoCasing.Value 
+            && __instance.roundInChamber == GunScript.RoundInChamber.Casing)
+            __instance.roundInChamber = GunScript.RoundInChamber.None;
+    }
+
     [HarmonyPatch("JamChance")]
     [HarmonyPostfix]
-    private static void JamChancePostfix(ref float __result)
+    public static void JamChancePostfix(ref float __result)
     {
         if (!Plugin.NeverJam.Value) return;
         __result = 0;

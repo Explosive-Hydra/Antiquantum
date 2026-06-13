@@ -36,6 +36,8 @@ public class ZhCnLangGenerator : ModLangGenBase
         Add("config.item.gun.infinite_ammunition.description", "∞ 无限子弹 ∞");
         Add("config.item.gun.never_jam.name", "永不卡壳");
         Add("config.item.gun.never_jam.description", "开启后，枪械将不会卡壳");
+        Add("config.item.gun.no_casing.name", "无弹壳");
+        Add("config.item.gun.no_casing.description", "开启后，枪械将不会弹出弹壳");
         Add("config.item.gun.recoilless.name", "无后座力");
         Add("config.item.gun.recoilless.description", "开启后，枪械将没有后坐力");
     }
