@@ -2,6 +2,7 @@ using HarmonyLib;
 using System;
 using System.Linq;
 using UnityEngine;
+using Quantum;
 
 namespace Quantum.Patch;
 
@@ -15,7 +16,8 @@ public class ConsoleScriptPatch
     private static string _lastPartial = "";
     private static float _lastUpTime;
     private static float _lastDownTime;
-    private const int MaxVisibleCandidates = 27;
+
+    private static int MaxVisible => Plugin.MaxVisibleCandidates.Value;
 
     [HarmonyPatch(nameof(ConsoleScript.TryFinishCommandPart))]
     [HarmonyPrefix]
@@ -42,7 +44,6 @@ public class ConsoleScriptPatch
         if (string.IsNullOrEmpty(text))
             return;
 
-        // 移除原有的黄色高亮标签
         text = text.Replace("<color=yellow>", "").Replace("</color>", "");
 
         var newlineIdx = text.IndexOf('\n');
@@ -50,28 +51,28 @@ public class ConsoleScriptPatch
             ? text.Substring(0, newlineIdx)
             : text;
 
-        // 计算滚动窗口范围，使高亮项始终可见
+        var maxVisible = MaxVisible;
         int windowStart, windowEnd;
-        if (_candidates.Length <= MaxVisibleCandidates)
+        if (_candidates.Length <= maxVisible)
         {
             windowStart = 0;
             windowEnd = _candidates.Length;
         }
         else
         {
-            const int half = MaxVisibleCandidates / 2;
+            var half = maxVisible / 2;
             windowStart = _index - half;
-            windowEnd = windowStart + MaxVisibleCandidates;
+            windowEnd = windowStart + maxVisible;
 
             if (windowStart < 0)
             {
                 windowStart = 0;
-                windowEnd = MaxVisibleCandidates;
+                windowEnd = maxVisible;
             }
             else if (windowEnd > _candidates.Length)
             {
                 windowEnd = _candidates.Length;
-                windowStart = windowEnd - MaxVisibleCandidates;
+                windowStart = windowEnd - maxVisible;
             }
         }
 
@@ -83,9 +84,9 @@ public class ConsoleScriptPatch
         {
             if (i == _index)
             {
-                sb.Append("<color=yellow>");
+                sb.Append("<b><color=yellow>");
                 sb.Append(_candidates[i]);
-                sb.Append("</color>\n");
+                sb.Append("</color></b>\n");
             }
             else
             {
@@ -107,7 +108,6 @@ public class ConsoleScriptPatch
         var text = __instance.input.text;
         var args = text.Split([' '], StringSplitOptions.None);
 
-        // 小键盘回车执行
         if (Input.GetKeyDown(KeyCode.KeypadEnter) && !string.IsNullOrEmpty(text))
         {
             __instance.ExecuteCommand(text);
@@ -135,12 +135,10 @@ public class ConsoleScriptPatch
         }
 
         var partial = args[args.Length - 1];
-
         var filteredFills = ConsoleScript.SearchArgumentAutofill(partial, fills);
 
         if (_cmdName != args[0] || _paramIdx != paramIdx)
         {
-            // 命令名或参数位置变化 → 完全重新加载
             _cmdName = args[0];
             _paramIdx = paramIdx;
             _candidates = filteredFills.ToArray();
@@ -149,7 +147,6 @@ public class ConsoleScriptPatch
         }
         else if (_lastPartial != partial)
         {
-            // 用户手动输入变化 → 重新过滤，保持索引在有效范围内
             _candidates = filteredFills.ToArray();
             _lastPartial = partial;
             ClampIndex();

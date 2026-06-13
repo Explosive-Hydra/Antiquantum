@@ -44,6 +44,8 @@ public class EnLangGenerator : ModLangGenBase
         Add("config.ui.ammunition_ui.description", "Display your ammunition in real time!");
         Add("config.ui.sort_key.name", "Sort Key");
         Add("config.ui.sort_key.description", "Press to sort container items");
+        Add("config.ui.max_visible_candidates.name", "Max Candidates");
+        Add("config.ui.max_visible_candidates.description", "Maximum number of candidate lines displayed in console autocomplete");
 
         // UI - Sort
         Add("ui.sort.mode.name", "Name");

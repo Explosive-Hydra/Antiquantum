@@ -44,6 +44,8 @@ public class ZhTwLangGenerator : ModLangGenBase
         Add("config.ui.ammunition_ui.description", "在原槍械菜单的上方顯示槍械剩余弹量和最大弹量");
         Add("config.ui.sort_key.name", "整理按鍵");
         Add("config.ui.sort_key.description", "按下整理容器物品");
+        Add("config.ui.max_visible_candidates.name", "最大候選數");
+        Add("config.ui.max_visible_candidates.description", "控制台參數候選列表最多顯示的行數");
 
         // UI - Sort
         Add("ui.sort.mode.name", "名稱");
