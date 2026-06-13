@@ -29,7 +29,8 @@ public class EnLangGenerator : ModLangGenBase
 
         // Config - Item - Gun
         Add("config.item.gun.auto_rack.name", "Auto Rack");
-        Add("config.item.gun.auto_rack.description", "If true, guns will automatically rack and stay racked when ammo is available");
+        Add("config.item.gun.auto_rack.description",
+            "If true, guns will automatically rack and stay racked when ammo is available");
         Add("config.item.gun.indestructible_gun.name", "Indestructible Gun");
         Add("config.item.gun.indestructible_gun.description", "If true, guns will not be destroyed");
         Add("config.item.gun.infinite_ammunition.name", "Infinite Ammunition");

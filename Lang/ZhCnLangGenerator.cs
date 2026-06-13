@@ -26,7 +26,7 @@ public class ZhCnLangGenerator : ModLangGenBase
         Add("config.info.ammunition_ui.description", "在原枪械菜单的上方显示枪械剩余弹量和最大弹量");
         Add("config.info.ctrl_to_expand.name", "Ctrl 更多信息");
         Add("config.info.ctrl_to_expand.description", "按下Ctrl才显示更多信息");
-        
+
         // Config - Item - Gun
         Add("config.item.gun.auto_rack.name", "自动上膛");
         Add("config.item.gun.auto_rack.description", "开启后，当有弹药时，枪械将自动拉栓并保持拉栓状态");

@@ -17,7 +17,8 @@ public static class GunScriptPatch
 
         if (Plugin.AutoRack.Value
             && __instance.roundInChamber
-                is GunScript.RoundInChamber.Casing or GunScript.RoundInChamber.None
+                is GunScript.RoundInChamber.Casing
+                or GunScript.RoundInChamber.None
             && __instance.roundsInMag > 0)
         {
             __instance.roundsInMag--;
@@ -25,21 +26,25 @@ public static class GunScriptPatch
             __instance.racked = false;
         }
 
-        if (Plugin.InfiniteAmmunition.Value) 
+        if (Plugin.InfiniteAmmunition.Value)
             __instance.roundsInMag = __instance.magCapacity;
-        
+
         __instance.knockBack = Plugin.Recoilless.Value
             ? 0
             : 8;
-        if (Plugin.IndestructibleGun.Value) __instance.conditionLossPerShot = 0;
-        if (!Plugin.AmmunitionUi.Value) PlayerCameraPatch.DestroyAmmunitionUi();
+
+        if (Plugin.IndestructibleGun.Value)
+            __instance.conditionLossPerShot = 0;
+
+        if (!Plugin.AmmunitionUi.Value)
+            PlayerCameraPatch.DestroyAmmunitionUi();
     }
 
     [HarmonyPatch("Fire")]
     [HarmonyPostfix]
     public static void FirePostfix(GunScript __instance)
     {
-        if (Plugin.NoCasing.Value 
+        if (Plugin.NoCasing.Value
             && __instance.roundInChamber == GunScript.RoundInChamber.Casing)
             __instance.roundInChamber = GunScript.RoundInChamber.None;
     }

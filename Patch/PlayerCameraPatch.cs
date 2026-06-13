@@ -120,17 +120,11 @@ public static class PlayerCameraPatch
         if (!Plugin.InfiniteAmmunition.Value)
         {
             if (realRemainingAmmunition >= 0.8)
-            {
                 _ammunitionText.color = Color.green;
-            }
             else if (realRemainingAmmunition >= 0.5)
-            {
                 _ammunitionText.color = Color.yellow;
-            }
             else
-            {
                 _ammunitionText.color = Color.red;
-            }
 
             _ammunitionText.fontSize = 32;
             _ammunitionText.text = $"{realRemainingAmmunition} / {_maximumAmmunition + 1}";
