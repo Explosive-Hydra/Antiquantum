@@ -62,7 +62,6 @@ public class Plugin : BaseUnityPlugin
         // UI
         AmmunitionUi = RegisterConfigUi(Config, nameof(AmmunitionUi).ToSnakeCase(), true);
         SortKey = RegisterConfigUi(Config, nameof(SortKey).ToSnakeCase(), KeyCode.E);
-
     }
 
     private static ConfigEntry<T> RegisterConfigInfo<T>(ConfigFile configFile, string key, T defaultValue)

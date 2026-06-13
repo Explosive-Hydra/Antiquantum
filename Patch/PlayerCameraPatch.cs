@@ -199,7 +199,7 @@ public static class PlayerCameraPatch
             _currentSortAscending
                 ? "↑"
                 : "↓", baseX, y - 5f);
-        
+
         _executeButton = CreateSmallButton(top, "ExecuteButton", layer,
             "S", baseX + 50f, y - 5f);
 
