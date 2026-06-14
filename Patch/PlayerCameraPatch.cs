@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using BepInEx.Logging;
 using HarmonyLib;
+using MossLib.Constant;
 using MossLib.Tool;
 using TMPro;
 using UnityEngine;
@@ -245,20 +246,16 @@ public static class PlayerCameraPatch
     private static void HandleInputPostfix(PlayerCamera __instance)
     {
         var camera = PlayerCamera.main;
-        if (camera.craftingPanel.activeSelf
-            && (Input.GetKeyDown(KeyCode.Tab)
-                || Input.GetKeyDown(KeyCode.Escape)))
-            camera.craftingPanel.SetActive(false);
-        
-        if (camera.woundView.activeSelf
-            && (Input.GetKeyDown(KeyCode.Tab)
-                || Input.GetKeyDown(KeyCode.Escape)))
-            __instance.ToggleWoundView();
-        
-        if (camera.tradeMenu.activeSelf
-            && (Input.GetKeyDown(KeyCode.Tab)
-                || Input.GetKeyDown(KeyCode.Escape)))
-            __instance.ToggleTradeMenu();
+
+        if (Input.GetKeyDown(Keys.ToggleInventory) || Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (camera.craftingPanel.activeSelf)
+                camera.craftingPanel.SetActive(false);
+            if (camera.woundView.activeSelf)
+                __instance.ToggleWoundView();
+            if (camera.tradeMenu.activeSelf)
+                __instance.ToggleTradeMenu();
+        }
         
         if (!Input.GetKeyDown(Plugin.SortKey.Value))
             return;
