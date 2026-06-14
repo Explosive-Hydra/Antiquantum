@@ -77,6 +77,6 @@ public class ZhTwLangGenerator : ModLangGenBase
         Add("log.player_camera_patch.pinyin.init_failed", "TinyPinyin 初始化失敗: {0} — 拼音搜尋已停用");
 
         // Log - ItemPatch
-        Add("log.item_patch.durability_exhaustion_alert", "{0} 的耐久度已低於 {1}%（當前 {2}%）");
+        Add("log.item_patch.durability_exhaustion_alert", "{0} 的耐久度已降至 {1}%");
     }
 }

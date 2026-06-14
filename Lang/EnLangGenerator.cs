@@ -77,6 +77,6 @@ public class EnLangGenerator : ModLangGenBase
         Add("log.player_camera_patch.pinyin.init_failed", "TinyPinyin init failed: {0} — pinyin search disabled");
 
         // Log - ItemPatch
-        Add("log.item_patch.durability_exhaustion_alert", "{0} durability dropped below {1}% (currently {2}%)");
+        Add("log.item_patch.durability_exhaustion_alert", "{0} durability dropped to {1}%");
     }
 }

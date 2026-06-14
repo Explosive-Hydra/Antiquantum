@@ -13,13 +13,10 @@ namespace Quantum.Patch;
 public static class ItemPatch
 {
     private const string LocaleKeyPre = "item.";
-
-    // 日志本地化前缀，同 PlayerCameraPatch 格式
     private const string LogLocaleKeyPre = "log.item_patch.";
 
     private static readonly Dictionary<string, Dictionary<string, string>> LangCache = new();
-    
-    private static readonly HashSet<string> AlertedItemIds = [];
+    private static readonly Dictionary<string, int> AlertedItemPercents = [];
     private static double _lastDurabilityCheckTime;
     private const double DurabilityCheckInterval = 2.0;
     private static int _lastCheckedFrame = -1;
@@ -50,26 +47,42 @@ public static class ItemPatch
         if (items == null)
             return;
 
-        foreach (var item in items)
+        const int alertStep = 5; // 每下降 5% 提醒一次
+
+        foreach (var item in items
+                     .Where(item => item != null
+                                    && item.favourited
+                                    && item.id != null))
         {
-            if (item == null || !item.favourited || item.id == null)
-                continue;
+            var condPercent = Mathf.FloorToInt(item.condition * 100f);
 
             if (item.condition >= threshold)
             {
-                AlertedItemIds.Remove(item.id);
+                // 耐久恢复至阈值以上，清除记录
+                AlertedItemPercents.Remove(item.id);
                 continue;
             }
 
-            if (!AlertedItemIds.Add(item.id))
+            // 首次低于阈值或下降 >= 5% 时提醒
+            if (!AlertedItemPercents.TryGetValue(item.id, out var lastPercent))
+            {
+                // 首次：直接提醒，记录当前百分比
+                AlertedItemPercents[item.id] = condPercent;
+            }
+            else if (lastPercent - condPercent >= alertStep)
+            {
+                // 下降了 >= 5%，再次提醒，更新记录
+                AlertedItemPercents[item.id] = condPercent;
+            }
+            else
+            {
                 continue;
+            }
 
             var itemName = item.fullName ?? item.id;
-            var condPercent = Mathf.FloorToInt(item.condition * 100f);
-            var thresholdPercent = Mathf.FloorToInt(threshold * 100f);
 
             LogAlert("durability_exhaustion_alert",
-                itemName, thresholdPercent, condPercent);
+                itemName, condPercent);
         }
     }
 
@@ -135,7 +148,7 @@ public static class ItemPatch
             return mainDict?.TryGetValue(itemId, out var name) == true ? name : null;
 
         // 加载语言文件
-        var path = $"{UnityEngine.Application.dataPath}/Lang/{langCode}.json";
+        var path = $"{Application.dataPath}/Lang/{langCode}.json";
         if (!File.Exists(path))
         {
             LangCache[langCode] = null;
@@ -174,9 +187,7 @@ public static class ItemPatch
     {
         return ModLocale.GetFormat($"{LocaleKeyPre}{key}", args);
     }
-
-    // ── 日志本地化包装器（同 PlayerCameraPatch Warning/Info/Error 格式） ──
-
+    
     private static void LogAlert(string text, params object[] args)
     {
         Log.Alert(ModLocale.GetFormat(LogLocaleKeyPre + text, args), Plugin.Logger, false);
