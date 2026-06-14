@@ -748,7 +748,22 @@ public static class PlayerCameraPatch
         if (_ammunitionUiObject == null || gunMenu == null)
             return;
 
-        _ammunitionUiObject.SetActive(gunMenu.activeSelf);
+        // 弹药 UI 仅在枪械菜单打开且没有其他覆盖界面时显示
+        // 制作界面、医疗面板、交易菜单、暂停界面打开时隐藏
+        var camera = PlayerCamera.main;
+        if (camera == null)
+        {
+            _ammunitionUiObject.SetActive(gunMenu.activeSelf);
+            return;
+        }
+
+        var shouldShow = gunMenu.activeSelf
+                         && !camera.craftingPanel.activeSelf
+                         && !camera.woundView.activeSelf
+                         && !camera.tradeMenu.activeSelf
+                         && !PauseHandler.paused;
+
+        _ammunitionUiObject.SetActive(shouldShow);
     }
 
     public static void DestroyAmmunitionUi()
