@@ -42,6 +42,10 @@ public static class ItemPatch
         if (info == null)
             return null;
 
+
+        var result = "";
+        result += $"ID: {id}\n";
+        
         // 双语名称：在物品原名后附加指定语言的翻译
         var bilingualCode = Plugin.BilingualName.Value?.Trim();
         if (!string.IsNullOrEmpty(bilingualCode)
@@ -50,12 +54,9 @@ public static class ItemPatch
             var secondName = GetItemNameInLang(id, bilingualCode);
             if (!string.IsNullOrEmpty(secondName) && !info.fullName.Contains(secondName))
             {
-                info.fullName += RichText.Italic($" ({secondName})");
+                result += RichText.Italic($"({secondName})\n");
             }
         }
-
-        var result = "";
-        result += $"ID: {id}";
 
         if (!ModLocale.HasLocaleKey(LocaleKeyPre + id))
             return string.IsNullOrEmpty(result.Trim())
