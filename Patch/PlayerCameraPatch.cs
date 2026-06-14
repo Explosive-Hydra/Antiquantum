@@ -146,6 +146,20 @@ public static class PlayerCameraPatch
         // 过滤：销毁不匹配项
         foreach (var go in unmatched)
             Object.Destroy(go);
+
+        // 修正匹配项的 anchoredPosition，使其连续排列在顶部
+        // 原始代码中每个 recipe 的位置是 -index * 64
+        for (var i = 0; i < matched.Count; i++)
+        {
+            var rect = matched[i].GetComponent<RectTransform>();
+            if (rect != null)
+                rect.anchoredPosition = new Vector2(-9f, -i * 64);
+        }
+
+        // 修正 recipeListContent 的 sizeDelta 以适应新的数量
+        var recipeListContent = (RectTransform)AccessTools.Field(typeof(PlayerCamera), "recipeListContent").GetValue(__instance);
+        if (recipeListContent != null)
+            recipeListContent.sizeDelta = new Vector2(1f, matched.Count * 64);
     }
 
     private static bool IsPinyinMatch(string displayName, string filter)
