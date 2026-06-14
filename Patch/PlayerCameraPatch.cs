@@ -157,7 +157,8 @@ public static class PlayerCameraPatch
         }
 
         // 修正 recipeListContent 的 sizeDelta 以适应新的数量
-        var recipeListContent = (RectTransform)AccessTools.Field(typeof(PlayerCamera), "recipeListContent").GetValue(__instance);
+        var recipeListContent =
+            (RectTransform)AccessTools.Field(typeof(PlayerCamera), "recipeListContent").GetValue(__instance);
         if (recipeListContent != null)
             recipeListContent.sizeDelta = new Vector2(1f, matched.Count * 64);
     }

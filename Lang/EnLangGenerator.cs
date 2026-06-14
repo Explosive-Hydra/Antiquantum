@@ -27,8 +27,7 @@ public class EnLangGenerator : ModLangGenBase
 
         // Config - Item - Gun
         Add("config.item.gun.auto_rack.name", "Auto Rack");
-        Add("config.item.gun.auto_rack.description",
-            "If true, guns will automatically rack and stay racked when ammo is available");
+        Add("config.item.gun.auto_rack.description", "If true, guns will automatically rack and stay racked when ammo is available");
         Add("config.item.gun.indestructible_gun.name", "Indestructible Gun");
         Add("config.item.gun.indestructible_gun.description", "If true, guns will not be destroyed");
         Add("config.item.gun.infinite_ammunition.name", "Infinite Ammunition");
@@ -40,14 +39,17 @@ public class EnLangGenerator : ModLangGenBase
         Add("config.item.gun.recoilless.name", "Recoilless");
         Add("config.item.gun.recoilless.description", "If true, guns will not have recoil");
 
+        // Config - Misc
+        Add("config.misc.no_observer.name", "No Observer");
+        Add("config.misc.no_observer.description", "If true, the world will not have observers");
+
         // Config - UI
         Add("config.ui.ammunition_ui.name", "Ammunition UI");
         Add("config.ui.ammunition_ui.description", "Display your ammunition in real time!");
         Add("config.ui.sort_key.name", "Sort Key");
         Add("config.ui.sort_key.description", "Press to sort container items");
         Add("config.ui.max_visible_candidates.name", "Max Candidates");
-        Add("config.ui.max_visible_candidates.description",
-            "Maximum number of candidate lines displayed in console autocomplete");
+        Add("config.ui.max_visible_candidates.description", "Maximum number of candidate lines displayed in console autocomplete");
         Add("config.ui.max_history_size.name", "History Size");
         Add("config.ui.max_history_size.description", "Maximum number of executed commands kept in console history");
 

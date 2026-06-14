@@ -31,6 +31,9 @@ public class Plugin : BaseUnityPlugin
     public static ConfigEntry<bool> NoCasing;
     public static ConfigEntry<bool> Recoilless;
 
+    // Misc
+    public static ConfigEntry<bool> NoObserver;
+
     // UI
     public static ConfigEntry<KeyCode> SortKey;
     public static ConfigEntry<int> MaxVisibleCandidates;
@@ -61,6 +64,9 @@ public class Plugin : BaseUnityPlugin
         NoCasing = RegisterConfigItemGun(Config, nameof(NoCasing).ToSnakeCase(), false);
         Recoilless = RegisterConfigItemGun(Config, nameof(Recoilless).ToSnakeCase(), false);
 
+        // Misc
+        NoObserver = RegisterConfigMisc(Config, nameof(NoObserver).ToSnakeCase(), false);
+
         // UI
         AmmunitionUi = RegisterConfigUi(Config, nameof(AmmunitionUi).ToSnakeCase(), true);
         SortKey = RegisterConfigUi(Config, nameof(SortKey).ToSnakeCase(), KeyCode.E);
@@ -82,6 +88,11 @@ public class Plugin : BaseUnityPlugin
     private static ConfigEntry<T> RegisterConfigItemGun<T>(ConfigFile configFile, string key, T defaultValue)
     {
         return RegisterConfigItem(configFile, "Gun", key, defaultValue);
+    }
+
+    private static ConfigEntry<T> RegisterConfigMisc<T>(ConfigFile configFile, string key, T defaultValue)
+    {
+        return RegisterConfig(configFile, "Misc", key, defaultValue);
     }
 
     private static ConfigEntry<T> RegisterConfigUi<T>(ConfigFile configFile, string key, T defaultValue)

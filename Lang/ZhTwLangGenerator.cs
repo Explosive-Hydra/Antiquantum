@@ -39,6 +39,10 @@ public class ZhTwLangGenerator : ModLangGenBase
         Add("config.item.gun.recoilless.name", "無後座力");
         Add("config.item.gun.recoilless.description", "開啟後，槍械將沒有後座力");
 
+        // Config - Misc
+        Add("config.misc.no_observer.name", "無觀察者");
+        Add("config.misc.no_observer.description", "開啟後，再無觀察者");
+
         // Config - UI
         Add("config.ui.ammunition_ui.name", "彈藥UI");
         Add("config.ui.ammunition_ui.description", "在原槍械菜单的上方顯示槍械剩余弹量和最大弹量");
