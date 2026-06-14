@@ -13,9 +13,6 @@ public static class ItemPatch
 {
     private const string LocaleKeyPre = "item.";
 
-    /// <summary>
-    /// 缓存已加载的语言文件 main 字典，key = 语言代码（如 "EN", "zh-CN"）
-    /// </summary>
     private static readonly Dictionary<string, Dictionary<string, string>> LangCache = new();
 
     [HarmonyPatch("SetupItems")]
